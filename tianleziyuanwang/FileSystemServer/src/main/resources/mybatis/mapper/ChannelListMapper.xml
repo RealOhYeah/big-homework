@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gsxy.filesystemserver.mapper.ChannelListMapper">
+
+    <resultMap type="com.gsxy.filesystemserver.domain.ChannelList" id="ChannelListMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="channelId" column="channel_id" jdbcType="INTEGER"/>
+        <result property="showId" column="show_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--  分页查询  -->
+    <select id="channelListPagingToGetData" resultType="com.gsxy.filesystemserver.domain.ChannelList">
+        select
+        *
+        from
+        channel_list
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and  id like concat('%',#{params.id},'%')
+            </if>
+            <if test="params.channelId != null and params.channelId != ''">
+                and  channel_id like concat('%',#{params.channelId},'%')
+            </if>
+            <if test="params.showId != null">
+                and   #{params.showId} = 0
+            </if>
+        </where>
+        limit
+        #{start},#{size}
+    </select>
+
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ChannelListMap">
+        select
+            *
+        from
+            channel_list
+        where
+            id = #{id}
+        limit
+            1
+    </select>
+
+
+
+    <!--  查询总数  -->
+    <select id="getCount" resultType="java.lang.Long">
+        select
+            count(*)
+        from
+            channel_list
+        <where>
+            <if test="params.id != null">
+                and id = #{params.id}
+            </if>
+            <if test="params.channelId != null">
+                and channel_id = #{params.channelId}
+            </if>
+            <if test="param1.showId != null">
+                and show_id = #{param1.showId}
+            </if>
+        </where>
+    </select>
+
+
+    <!--新增数据-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into channel_list
+        values (#{id},#{channelId},#{showId})
+    </insert>
+
+
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update
+            channel_list
+        <set>
+            <if test="channelId != null">
+                channel_id = #{channelId},
+            </if>
+            <if test="showId != null">
+                show_id = #{showId},
+            </if>
+        </set>
+        where
+            id= #{id}
+        limit
+            1
+    </update>
+
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from
+            channel_list
+        where
+            id = #{id}
+        limit
+            1
+    </delete>
+
+    <!-- 通过show_id查询多条数据   -->
+    <select id="queryByShowId" resultMap="ChannelListMap">
+        SELECT
+            *
+        FROM
+            channel_list
+        where
+            show_id = #{id}
+
+    </select>
+
+
+</mapper>
+
+

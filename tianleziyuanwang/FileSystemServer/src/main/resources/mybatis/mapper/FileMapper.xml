@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gsxy.filesystemserver.mapper.FileMapper">
+
+    <select id="queryPublicFileWithoutMyselfCoung" resultType="long">
+        select count(*) from file_uploads where status = 0 and  id != #{id}
+    </select>
+
+    <select id="queryPublicFileWithoutMyself" resultType="com.gsxy.filesystemserver.domain.FileUploads">
+        select * from file_uploads where status = 0 and  id != #{id}
+
+            limit
+            #{start},#{size}
+    </select>
+
+    <insert id="add" keyProperty="id" useGeneratedKeys="true">
+        insert into
+            file_uploads
+            (file_name,original_file_name,file_type,role,
+             download_path,create_by,create_time,update_by,
+             update_time,status,del_flag)
+        values
+            (#{fileName},#{originalFileName},#{fileType},#{role},
+             #{downloadPath},#{createBy},#{createTime},#{updateBy},
+             #{updateTime},#{status},#{delFlag})
+    </insert>
+
+    <!--插入文件下载信息    -->
+    <insert id="insertDownloadFile">
+        insert into
+            download_file
+        (file_name,down_path,
+         create_by,create_time)
+        values
+            (#{fileName},#{downPath},#{createBy},#{createTime})
+
+    </insert>
+
+    <!-- 记录删除操作日志 -->
+    <insert id="insertIntoDelteLog">
+        insert into
+            delete_log
+            (delete_by,delete_time,table_name,file_name)
+        values
+            (#{deleteBy},#{deleteTime},#{tableName},#{fileName})
+    </insert>
+
+    <!--    查找文件    -->
+    <select id="findFile" resultType="com.gsxy.filesystemserver.domain.FileUploads" parameterType="java.lang.Long">
+        select *
+        from file_uploads
+        where id = #{imgId}
+        limit 1
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="getCount" resultType="long">
+        select
+         count(*)
+        from
+            file_uploads
+        <where>
+            <if test="parmas.id != null">
+                and id = #{parmas.id}
+            </if>
+            <if test="parmas.originalFileName != null and parmas.originalFileName != ''">
+                and original_file_name = #{parmas.originalFileName}
+            </if>
+            <if test="parmas.fileType != null and parmas.fileType != ''">
+                and file_type = #{parmas.fileType}
+            </if>
+            <if test="parmas.role != null">
+                and role = #{parmas.role}
+            </if>
+            <if test="parmas.downloadPath != null and parmas.downloadPath != ''">
+                and download_path = #{parmas.downloadPath}
+            </if>
+            <if test="parmas.createTime != null">
+                and create_time =  #{parmas.createTime}
+            </if>
+            <if test="parmas.createBy != null">
+                and create_by = #{parmas.createBy}
+            </if>
+            <if test="parmas.delFlag != null">
+                and del_flag = #{parmas.delFlag}
+            </if>
+            <if test="parmas.status != null">
+                and status =  #{parmas.status}
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 分页查询 -->
+    <select id="filePagingToGetUserData" resultType="com.gsxy.filesystemserver.domain.FileUploads">
+        select
+            *
+        from
+            file_uploads
+        <where>
+            <if test="parmas.id != null">
+                and id = #{parmas.id}
+            </if>
+            <if test="parmas.originalFileName != null and parmas.originalFileName != ''">
+                and original_file_name = #{parmas.originalFileName}
+            </if>
+            <if test="parmas.fileType != null and parmas.fileType != ''">
+                and file_type = #{parmas.fileType}
+            </if>
+            <if test="parmas.role != null">
+                and role = #{parmas.role}
+            </if>
+            <if test="parmas.downloadPath != null and parmas.downloadPath != ''">
+                and download_path = #{parmas.downloadPath}
+            </if>
+            <if test="parmas.createTime != null">
+                and create_time =  #{parmas.createTime}
+            </if>
+            <if test="parmas.createBy != null">
+                and create_by = #{parmas.createBy}
+            </if>
+            <if test="parmas.delFlag != null">
+                and del_flag = #{parmas.delFlag}
+            </if>
+            <if test="parmas.status != null">
+                and status =  #{parmas.status}
+            </if>
+            <!--
+                其他的需要的补上。我赶时间不写example了
+                                                21杨易达
+            -->
+        </where>
+        limit
+             #{start},#{size}
+    </select>
+
+    <select id="selectFileNameById" resultType="java.lang.String">
+        select
+            file_name
+        from
+            file_uploads
+        where
+            id=#{id}
+        limit 1
+    </select>
+
+    <!-- 根据id查找文件扩展名 -->
+    <select id="selectFileTypeById" resultType="java.lang.String">
+        select
+            file_type
+        from
+            file_uploads
+        where
+            id = #{id}
+        limit 1
+    </select>
+
+    <delete id="fileDelete" parameterType="java.lang.Long">
+        delete
+        from
+            file_uploads
+        where
+            id = #{id}
+    </delete>
+
+    <!-- 文件删除 -->
+    <delete id="deleteCarouselFile">
+    delete
+    from
+        carousel_file
+    where
+        id = #{id}
+    limit 1
+    </delete>
+
+    <!-- 删除 -->
+    <delete id="deleteFile">
+        delete
+        from
+            file_uploads
+        where
+            id = #{id}
+    </delete>
+
+    <!-- 文件修改 -->
+    <update id="updateFile">
+        update
+            file_uploads
+        <set>
+            <if test="fileType != null and fileType != ''">
+                file_type = #{fileType},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="updateFileName != null and updateFileName != ''">
+                original_file_name = #{updateFileName},
+            </if>
+            <if test="downloadPath != null and downloadPath != ''">
+                download_path = #{downloadPath}
+            </if>
+        </set>
+        where
+            id = #{id}
+        limit 1
+    </update>
+
+</mapper>
