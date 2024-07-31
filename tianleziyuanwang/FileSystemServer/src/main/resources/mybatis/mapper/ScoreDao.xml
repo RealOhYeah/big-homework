@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gsxy.filesystemserver.mapper.ScoreDao">
+
+<!--    <resultMap id="BaseResultMap" type="com.gsxy.filesystemserver.domain.ScoreAll">-->
+<!--        <result column="sname" property="sname" />-->
+<!--        <result column="cname" property="cname" />-->
+<!--        <result column="degree" property="degree" />-->
+<!--    </resultMap>-->
+
+    <!-- 查询所有学生的成绩    -->
+    <select id="queryAll" resultType="com.gsxy.filesystemserver.domain.ScoreAll">
+        SELECT
+            st.sname,
+            co.cname,
+            sc.degree
+        FROM
+            student AS st,
+            score AS sc,
+            course AS co
+        WHERE
+            st.sno = sc.sno
+          AND co.cno = sc.cno;
+    </select>
+
+
+    <!--查询单个-->
+
+    <select id="queryById" resultType="com.gsxy.filesystemserver.domain.Score">
+        select sno
+        from score
+        where sno = #{sno}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultType="com.gsxy.filesystemserver.domain.Score">
+        select
+        sno,cno,degree
+        from score
+        <where>
+            <if test="sno != null and sno != ''">
+                and sno = #{sno}
+            </if>
+            <if test="cno != null and cno != ''">
+                and cno = #{cno}
+            </if>
+            <if test="degree != null">
+                and degree = #{degree}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from score
+        <where>
+            <if test="sno != null and sno != ''">
+                and sno = #{sno}
+            </if>
+            <if test="cno != null and cno != ''">
+                and cno = #{cno}
+            </if>
+            <if test="degree != null">
+                and degree = #{degree}
+            </if>
+        </where>
+    </select>
+
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="sno" useGeneratedKeys="true">
+        insert into score(degree)
+        values (#{degree})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="sno" useGeneratedKeys="true">
+        insert into score(degree)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.degree})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="sno" useGeneratedKeys="true">
+        insert into score(degree)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.degree})
+        </foreach>
+        on duplicate key update
+        degree = values(degree)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update score
+        <set>
+            <if test="degree != null">
+                degree = #{degree},
+            </if>
+        </set>
+        where sno = #{sno}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from score
+        where sno = #{sno}
+    </delete>
+
+
+
+
+
+</mapper>
+
