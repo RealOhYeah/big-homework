@@ -1,17 +1,16 @@
 package com.gsxy.filesystemserver.service;
 
-import com.gsxy.filesystemserver.domain.Score;
-import com.gsxy.filesystemserver.domain.vo.ResponseVo;
+import com.gsxy.filesystemserver.domain.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 /**
- * (Score)表服务接口
+ * (Student)表服务接口
  *
  * @author Oh...Yeah!!!
- * @since 2024-07-30 11:15:54
+ * @since 2024-08-03 15:30:15
  */
-public interface ScoreService {
+public interface StudentService {
 
     /**
      * 通过ID查询单条数据
@@ -19,32 +18,32 @@ public interface ScoreService {
      * @param sno 主键
      * @return 实例对象
      */
-    Score queryById(String sno);
+    Student queryById(String sno);
 
     /**
      * 分页查询
      *
-     * @param score       筛选条件
+     * @param student     筛选条件
      * @param pageRequest 分页对象
      * @return 查询结果
      */
-    Page<Score> queryByPage(Score score, PageRequest pageRequest);
+    Page<Student> queryByPage(Student student, PageRequest pageRequest);
 
     /**
      * 新增数据
      *
-     * @param score 实例对象
+     * @param student 实例对象
      * @return 实例对象
      */
-    Score insert(Score score);
+    Student insert(Student student);
 
     /**
      * 修改数据
      *
-     * @param score 实例对象
+     * @param student 实例对象
      * @return 实例对象
      */
-    Score update(Score score);
+    Student update(Student student);
 
     /**
      * 通过主键删除数据
@@ -54,11 +53,4 @@ public interface ScoreService {
      */
     boolean deleteById(String sno);
 
-    ResponseVo queryAll();
-
-    /**
-     * 查询所有科目
-     * @return
-     */
-    ResponseVo queryAllCourse();
 }

@@ -68,6 +68,11 @@
         </where>
     </select>
 
+    <!--查询所有科目 -->
+    <select id="queryAllCourse" resultType="com.gsxy.filesystemserver.domain.Course">
+        SELECT * FROM course;
+    </select>
+
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="sno" useGeneratedKeys="true">

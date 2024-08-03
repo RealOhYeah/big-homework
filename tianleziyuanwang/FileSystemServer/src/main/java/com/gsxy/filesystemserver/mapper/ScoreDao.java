@@ -1,6 +1,7 @@
 package com.gsxy.filesystemserver.mapper;
 
 
+import com.gsxy.filesystemserver.domain.Course;
 import com.gsxy.filesystemserver.domain.Score;
 import com.gsxy.filesystemserver.domain.ScoreAll;
 import org.apache.ibatis.annotations.Mapper;
@@ -91,5 +92,11 @@ public interface ScoreDao {
      * @return
      */
     ArrayList<ScoreAll> queryAll();
+
+    /**
+     * 查询所有科目
+     * @return
+     */
+    ArrayList<Course> queryAllCourse();
 }
 

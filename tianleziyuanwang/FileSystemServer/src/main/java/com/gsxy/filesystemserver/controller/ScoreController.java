@@ -3,6 +3,7 @@ package com.gsxy.filesystemserver.controller;
 import com.alibaba.fastjson2.JSONArray;
 import com.gsxy.filesystemserver.domain.Score;
 import com.gsxy.filesystemserver.domain.bo.CarouselQueryBo;
+import com.gsxy.filesystemserver.domain.bo.ImportStudentScore;
 import com.gsxy.filesystemserver.service.ScoreService;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -33,10 +34,26 @@ public class ScoreController {
 
 
 
-//    @PostMapping
-//    public String scoreInput(Score score) {
-//        return ResponseEntity.ok(this.scoreService.insert(score));
-//    }
+    /**
+     * 学生成绩录入
+     * @param importStudentScore
+     * @return
+     */
+    @PostMapping
+    public String scoreInput(ImportStudentScore importStudentScore) {
+
+
+     return null;
+    }
+
+    /**
+     * 查询所有科目
+     * @return
+     */
+    @GetMapping("/course")
+    public String queryAllCourse() {
+        return JSONArray.toJSONString(scoreService.queryAllCourse());
+    }
 
 
     /**

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gsxy.filesystemserver.dao.StudentDao">
+    <resultMap type="com.gsxy.filesystemserver.domain.Student" id="StudentMap">
+        <result property="sno" column="sno" jdbcType="VARCHAR"/>
+        <result property="sname" column="sname" jdbcType="VARCHAR"/>
+        <result property="ssex" column="ssex" jdbcType="VARCHAR"/>
+        <result property="sbirthday" column="sbirthday" jdbcType="TIMESTAMP"/>
+        <result property="sclass" column="sclass" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="StudentMap">
+        select sno,sname,ssex,sbirthday,sclass
+        from student
+        where sno = #{sno}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="StudentMap">
+        select
+        sno,sname,ssex,sbirthday,sclass
+        from student
+        <where>
+            <if test="sno != null and sno != ''">
+                and sno = #{sno}
+            </if>
+            <if test="sname != null and sname != ''">
+                and sname = #{sname}
+            </if>
+            <if test="ssex != null and ssex != ''">
+                and ssex = #{ssex}
+            </if>
+            <if test="sbirthday != null">
+                and sbirthday = #{sbirthday}
+            </if>
+            <if test="sclass != null and sclass != ''">
+                and sclass = #{sclass}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from student
+        <where>
+            <if test="sno != null and sno != ''">
+                and sno = #{sno}
+            </if>
+            <if test="sname != null and sname != ''">
+                and sname = #{sname}
+            </if>
+            <if test="ssex != null and ssex != ''">
+                and ssex = #{ssex}
+            </if>
+            <if test="sbirthday != null">
+                and sbirthday = #{sbirthday}
+            </if>
+            <if test="sclass != null and sclass != ''">
+                and sclass = #{sclass}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="sno" useGeneratedKeys="true">
+        insert into student(sno,sname,ssex,sbirthday,sclass)
+        values (#{sname}#{ssex}#{sbirthday}#{sclass})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="sno" useGeneratedKeys="true">
+        insert into student(sno,sname,ssex,sbirthday,sclass)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.sname}#{entity.ssex}#{entity.sbirthday}#{entity.sclass})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="sno" useGeneratedKeys="true">
+        insert into student(sno,sname,ssex,sbirthday,sclass)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.sname}#{entity.ssex}#{entity.sbirthday}#{entity.sclass})
+        </foreach>
+        on duplicate key update
+        sname = values(sname)ssex = values(ssex)sbirthday = values(sbirthday)sclass = values(sclass)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update student
+        <set>
+            <if test="sname != null and sname != ''">
+                sname = #{sname},
+            </if>
+            <if test="ssex != null and ssex != ''">
+                ssex = #{ssex},
+            </if>
+            <if test="sbirthday != null">
+                sbirthday = #{sbirthday},
+            </if>
+            <if test="sclass != null and sclass != ''">
+                sclass = #{sclass},
+            </if>
+        </set>
+        where sno = #{sno}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from student
+        where sno = #{sno}
+    </delete>
+</mapper>
+

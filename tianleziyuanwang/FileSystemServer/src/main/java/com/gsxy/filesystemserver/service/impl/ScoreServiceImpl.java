@@ -1,5 +1,6 @@
 package com.gsxy.filesystemserver.service.impl;
 
+import com.gsxy.filesystemserver.domain.Course;
 import com.gsxy.filesystemserver.domain.Score;
 import com.gsxy.filesystemserver.domain.ScoreAll;
 import com.gsxy.filesystemserver.domain.vo.ResponseVo;
@@ -111,5 +112,16 @@ public class ScoreServiceImpl implements ScoreService {
 
 
         return new ResponseVo("success", map, "200");
+    }
+
+    /**
+     * 查询所有科目
+     * @return
+     */
+    @Override
+    public ResponseVo queryAllCourse() {
+
+        ArrayList<Course> courses = scoreDao.queryAllCourse();
+        return new ResponseVo("success", courses, "200");
     }
 }
