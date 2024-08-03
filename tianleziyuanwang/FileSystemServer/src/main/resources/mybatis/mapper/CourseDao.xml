@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gsxy.filesystemserver.dao.CourseDao">
+<mapper namespace="com.gsxy.filesystemserver.mapper.CourseDao">
     <resultMap type="com.gsxy.filesystemserver.domain.Course" id="CourseMap">
         <result property="cno" column="cno" jdbcType="VARCHAR"/>
         <result property="cname" column="cname" jdbcType="VARCHAR"/>
         <result property="tno" column="tno" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <!--查询所有科目 -->
+    <select id="queryAllCourse" resultType="com.gsxy.filesystemserver.domain.Course">
+        SELECT * FROM course;
+    </select>
+
 
     <!--查询单个-->
     <select id="queryById" resultMap="CourseMap">

@@ -1,6 +1,7 @@
 package com.gsxy.filesystemserver.service.impl;
 
-import com.gsxy.filesystemserver.dao.CourseDao;
+import com.gsxy.filesystemserver.domain.vo.ResponseVo;
+import com.gsxy.filesystemserver.mapper.CourseDao;
 import com.gsxy.filesystemserver.domain.Course;
 import com.gsxy.filesystemserver.service.CourseService;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 
 /**
  * (Course)表服务实现类
@@ -20,6 +22,18 @@ import javax.annotation.Resource;
 public class CourseServiceImpl implements CourseService {
     @Resource
     private CourseDao courseDao;
+
+
+    /**
+     * 查询所有科目
+     * @return
+     */
+    @Override
+    public ResponseVo queryAllCourse() {
+
+        ArrayList<Course> courses = courseDao.queryAllCourse();
+        return new ResponseVo("success", courses, "200");
+    }
 
     /**
      * 通过ID查询单条数据

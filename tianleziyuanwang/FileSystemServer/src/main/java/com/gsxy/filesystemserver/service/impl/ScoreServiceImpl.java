@@ -114,14 +114,4 @@ public class ScoreServiceImpl implements ScoreService {
         return new ResponseVo("success", map, "200");
     }
 
-    /**
-     * 查询所有科目
-     * @return
-     */
-    @Override
-    public ResponseVo queryAllCourse() {
-
-        ArrayList<Course> courses = scoreDao.queryAllCourse();
-        return new ResponseVo("success", courses, "200");
-    }
 }

@@ -1,6 +1,6 @@
 package com.gsxy.filesystemserver.service.impl;
 
-import com.gsxy.filesystemserver.dao.TeacherDao;
+import com.gsxy.filesystemserver.mapper.TeacherDao;
 import com.gsxy.filesystemserver.domain.Teacher;
 import com.gsxy.filesystemserver.service.TeacherService;
 import org.springframework.stereotype.Service;

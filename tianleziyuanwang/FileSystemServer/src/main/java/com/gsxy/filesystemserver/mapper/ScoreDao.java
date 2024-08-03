@@ -93,10 +93,5 @@ public interface ScoreDao {
      */
     ArrayList<ScoreAll> queryAll();
 
-    /**
-     * 查询所有科目
-     * @return
-     */
-    ArrayList<Course> queryAllCourse();
 }
 

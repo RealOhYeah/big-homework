@@ -1,5 +1,6 @@
 package com.gsxy.filesystemserver.service;
 import com.gsxy.filesystemserver.domain.Course;
+import com.gsxy.filesystemserver.domain.vo.ResponseVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -10,6 +11,12 @@ import org.springframework.data.domain.PageRequest;
  * @since 2024-08-03 15:30:14
  */
 public interface CourseService {
+
+    /**
+     * 查询所有科目
+     * @return
+     */
+    ResponseVo queryAllCourse();
 
     /**
      * 通过ID查询单条数据

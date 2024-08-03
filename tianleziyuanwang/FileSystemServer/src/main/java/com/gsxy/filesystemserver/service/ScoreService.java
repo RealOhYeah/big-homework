@@ -56,9 +56,5 @@ public interface ScoreService {
 
     ResponseVo queryAll();
 
-    /**
-     * 查询所有科目
-     * @return
-     */
-    ResponseVo queryAllCourse();
+
 }

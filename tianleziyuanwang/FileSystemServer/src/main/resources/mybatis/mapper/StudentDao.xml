@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gsxy.filesystemserver.dao.StudentDao">
+<mapper namespace="com.gsxy.filesystemserver.mapper.StudentDao">
     <resultMap type="com.gsxy.filesystemserver.domain.Student" id="StudentMap">
         <result property="sno" column="sno" jdbcType="VARCHAR"/>
         <result property="sname" column="sname" jdbcType="VARCHAR"/>

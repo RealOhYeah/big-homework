@@ -39,21 +39,14 @@ public class ScoreController {
      * @param importStudentScore
      * @return
      */
-    @PostMapping
-    public String scoreInput(ImportStudentScore importStudentScore) {
+//    @PostMapping
+//    public String scoreInput(ImportStudentScore importStudentScore) {
+//
+//
+//     return null;
+//    }
 
 
-     return null;
-    }
-
-    /**
-     * 查询所有科目
-     * @return
-     */
-    @GetMapping("/course")
-    public String queryAllCourse() {
-        return JSONArray.toJSONString(scoreService.queryAllCourse());
-    }
 
 
     /**
