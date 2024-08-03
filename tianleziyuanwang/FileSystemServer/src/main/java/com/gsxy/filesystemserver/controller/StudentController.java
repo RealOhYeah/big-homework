@@ -1,5 +1,6 @@
 package com.gsxy.filesystemserver.controller;
 
+import com.alibaba.fastjson2.JSONArray;
 import com.gsxy.filesystemserver.domain.Student;
 import com.gsxy.filesystemserver.service.StudentService;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,17 @@ public class StudentController {
      */
     @Resource
     private StudentService studentService;
+
+    /**
+     * 查询所有学生
+     * @return
+     */
+    @GetMapping("/student")
+    public String queryAllStudent() {
+        return JSONArray.toJSONString(studentService.queryAllStudent());
+    }
+
+
 
     /**
      * 分页查询

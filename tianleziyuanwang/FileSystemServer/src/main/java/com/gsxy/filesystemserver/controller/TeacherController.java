@@ -1,6 +1,7 @@
 package com.gsxy.filesystemserver.controller;
 
-import com.gsxy.filesystemserver.entity.Teacher;
+import com.alibaba.fastjson2.JSONArray;
+import com.gsxy.filesystemserver.domain.Teacher;
 import com.gsxy.filesystemserver.service.TeacherService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,15 @@ public class TeacherController {
     @Resource
     private TeacherService teacherService;
 
+
+    /**
+     * 查询所有老师
+     * @return
+     */
+    @GetMapping("/teacher")
+    public String queryAllTeacher() {
+        return JSONArray.toJSONString(teacherService.queryAllTeacher());
+    }
 
 
 

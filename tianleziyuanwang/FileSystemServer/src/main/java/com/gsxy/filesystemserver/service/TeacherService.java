@@ -1,7 +1,8 @@
 package com.gsxy.filesystemserver.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gsxy.filesystemserver.domain.Teacher;
+import com.gsxy.filesystemserver.domain.vo.ResponseVo;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 /**
@@ -53,4 +54,9 @@ public interface TeacherService {
      */
     boolean deleteById(String tno);
 
+    /**
+     * 查询所有老师
+     * @return
+     */
+    ResponseVo queryAllTeacher();
 }

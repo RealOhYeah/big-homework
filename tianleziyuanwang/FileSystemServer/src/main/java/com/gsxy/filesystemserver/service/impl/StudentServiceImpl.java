@@ -1,5 +1,7 @@
 package com.gsxy.filesystemserver.service.impl;
 
+import com.gsxy.filesystemserver.domain.Course;
+import com.gsxy.filesystemserver.domain.vo.ResponseVo;
 import com.gsxy.filesystemserver.mapper.StudentDao;
 import com.gsxy.filesystemserver.domain.Student;
 import com.gsxy.filesystemserver.service.StudentService;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 
 /**
  * (Student)表服务实现类
@@ -78,5 +81,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public boolean deleteById(String sno) {
         return this.studentDao.deleteById(sno) > 0;
+    }
+
+    /**
+     * 查询所有学生
+     * @return
+     */
+    @Override
+    public ResponseVo queryAllStudent() {
+        ArrayList<Student> students = studentDao.queryAllStudent();
+        return new ResponseVo("success", students, "200");
     }
 }

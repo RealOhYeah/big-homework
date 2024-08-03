@@ -114,5 +114,10 @@
         from student
         where sno = #{sno}
     </delete>
+
+    <!-- 查询所有学生    -->
+    <select id="queryAllStudent" resultMap="StudentMap">
+        SELECT * FROM student;
+    </select>
 </mapper>
 

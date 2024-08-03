@@ -5,17 +5,11 @@ import com.gsxy.filesystemserver.domain.Score;
 import com.gsxy.filesystemserver.domain.bo.CarouselQueryBo;
 import com.gsxy.filesystemserver.domain.bo.ImportStudentScore;
 import com.gsxy.filesystemserver.service.ScoreService;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-import java.io.FileOutputStream;
 
 /**
  * (Score)表控制层
@@ -39,18 +33,17 @@ public class ScoreController {
      * @param importStudentScore
      * @return
      */
-//    @PostMapping
-//    public String scoreInput(ImportStudentScore importStudentScore) {
-//
-//
-//     return null;
-//    }
+    @PostMapping
+    public String scoreInput(ImportStudentScore importStudentScore) {
 
+
+     return null;
+    }
 
 
 
     /**
-     * 查询所有数据
+     * 查看所有学生成绩
      * @return
      */
     @PostMapping(value = "/queryAll")

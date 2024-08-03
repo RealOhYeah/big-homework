@@ -124,5 +124,10 @@
         from teacher
         where tno = #{tno}
     </delete>
+
+    <!-- 查询所有老师 -->
+    <select id="queryAllTeacher" resultMap="TeacherMap">
+        SELECT * FROM teacher;
+    </select>
 </mapper>
 

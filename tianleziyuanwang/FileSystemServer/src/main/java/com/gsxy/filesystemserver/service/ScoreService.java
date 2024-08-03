@@ -54,6 +54,10 @@ public interface ScoreService {
      */
     boolean deleteById(String sno);
 
+    /**
+     * 查看所有学生成绩
+     * @return
+     */
     ResponseVo queryAll();
 
 

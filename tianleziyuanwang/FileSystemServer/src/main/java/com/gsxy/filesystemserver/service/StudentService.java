@@ -1,6 +1,7 @@
 package com.gsxy.filesystemserver.service;
 
 import com.gsxy.filesystemserver.domain.Student;
+import com.gsxy.filesystemserver.domain.vo.ResponseVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -53,4 +54,9 @@ public interface StudentService {
      */
     boolean deleteById(String sno);
 
+    /**
+     * 查询所有学生
+     * @return
+     */
+    ResponseVo queryAllStudent();
 }

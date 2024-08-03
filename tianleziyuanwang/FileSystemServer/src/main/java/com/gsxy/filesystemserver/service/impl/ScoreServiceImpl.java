@@ -87,7 +87,7 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     /**
-     * 查询所有成绩
+     * 查看所有学生成绩
      * @return
      */
     @Override

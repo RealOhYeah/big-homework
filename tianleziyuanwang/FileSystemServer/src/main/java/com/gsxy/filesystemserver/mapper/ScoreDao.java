@@ -88,7 +88,7 @@ public interface ScoreDao {
     int deleteById(String sno);
 
     /**
-     * 查询所有成绩
+     * 查看所有学生成绩
      * @return
      */
     ArrayList<ScoreAll> queryAll();
