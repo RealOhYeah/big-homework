@@ -61,4 +61,9 @@ public interface ScoreService {
     ResponseVo queryAll();
 
 
+    /**
+     * 查看所有学生成绩排名
+     * @return
+     */
+    ResponseVo queryRanking();
 }

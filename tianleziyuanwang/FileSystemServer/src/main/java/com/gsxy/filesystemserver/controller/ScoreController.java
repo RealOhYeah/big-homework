@@ -2,8 +2,7 @@ package com.gsxy.filesystemserver.controller;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.gsxy.filesystemserver.domain.Score;
-import com.gsxy.filesystemserver.domain.bo.CarouselQueryBo;
-import com.gsxy.filesystemserver.domain.bo.ImportStudentScore;
+import com.gsxy.filesystemserver.domain.vo.ResponseVo;
 import com.gsxy.filesystemserver.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,17 +26,28 @@ public class ScoreController {
     private ScoreService scoreService;
 
 
+    /**
+     * 查看所有学生成绩排名
+     * @return
+     */
+    @PostMapping(value = "/queryRanking")
+    public String queryRanking() {
+        return JSONArray.toJSONString(scoreService.queryRanking());
+    }
+
+
 
     /**
      * 学生成绩录入
-     * @param importStudentScore
+     * @param score
      * @return
      */
-    @PostMapping
-    public String scoreInput(ImportStudentScore importStudentScore) {
+    @PostMapping("scoreInput")
+    public String scoreInput(Score score) {
 
+        Score insert = scoreService.insert(score);
 
-     return null;
+        return JSONArray.toJSONString(new ResponseVo("success", insert, "200"));
     }
 
 

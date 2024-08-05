@@ -86,6 +86,44 @@ public class ScoreServiceImpl implements ScoreService {
         return this.scoreDao.deleteById(sno) > 0;
     }
 
+
+    /**
+     * 查看所有学生成绩排名(总分和平均分)
+     * @return
+     */
+    @Override
+    public ResponseVo queryRanking() {
+
+        HashMap<String, HashMap<String, Integer>> stringHashMapHashMap = getStringHashMapHashMap();
+
+        HashMap<String, Integer> map = new HashMap<>();
+
+        for (String s : stringHashMapHashMap.keySet()) {
+            HashMap<String, Integer> map1 = stringHashMapHashMap.get(s);
+            int sum = 0;
+            for (Integer integer : map1.values()) {
+                sum += integer;
+            }
+            map.put(s, sum);
+        }
+
+        HashMap<String, HashMap<String, Double>> averageAndtota = new HashMap<>();
+
+        for (String s : map.keySet()) {
+            HashMap<String, Double> map2 = new HashMap<>();
+            Double d = map.get(s)+0.0;
+            map2.put("总分", d);
+            map2.put("平均分", d/stringHashMapHashMap.get(s).size());
+            averageAndtota.put(s, map2);
+         }
+
+        System.out.println("???");
+        System.out.println(averageAndtota);
+
+        return new ResponseVo("success", averageAndtota, "200");
+    }
+
+
     /**
      * 查看所有学生成绩
      * @return
@@ -93,6 +131,21 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public ResponseVo queryAll() {
 
+        HashMap<String, HashMap<String, Integer>> map = getStringHashMapHashMap();
+
+        System.out.println("???");
+        System.out.println(map);
+
+
+        return new ResponseVo("success", map, "200");
+    }
+
+
+    /**
+     * 获取所有学生成绩
+     * @return
+     */
+    private HashMap<String, HashMap<String, Integer>> getStringHashMapHashMap() {
         ArrayList<ScoreAll> scoreAlls = scoreDao.queryAll();
 
         HashMap<String, HashMap<String,Integer>> map = new HashMap<>();
@@ -106,12 +159,7 @@ public class ScoreServiceImpl implements ScoreService {
             map1.put(scoreAll.getCname(), scoreAll.getDegree());
             map.put(scoreAll.getSname(), map1);
         });
-
-        System.out.println("???");
-        System.out.println(map);
-
-
-        return new ResponseVo("success", map, "200");
+        return map;
     }
 
 }
