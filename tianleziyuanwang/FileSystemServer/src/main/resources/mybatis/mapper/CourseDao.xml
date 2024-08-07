@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gsxy.filesystemserver.mapper.CourseDao">
+    <resultMap type="com.gsxy.filesystemserver.domain.Course" id="CourseMap">
+        <result property="cno" column="cno" jdbcType="VARCHAR"/>
+        <result property="cname" column="cname" jdbcType="VARCHAR"/>
+        <result property="tno" column="tno" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询所有科目 -->
+    <select id="queryAllCourse" resultType="com.gsxy.filesystemserver.domain.Course">
+        SELECT * FROM course;
+    </select>
+
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CourseMap">
+        select cno,cname,tno
+        from course
+        where cno = #{cno}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CourseMap">
+        select
+        cno,cname,tno
+        from course
+        <where>
+            <if test="cno != null and cno != ''">
+                and cno = #{cno}
+            </if>
+            <if test="cname != null and cname != ''">
+                and cname = #{cname}
+            </if>
+            <if test="tno != null and tno != ''">
+                and tno = #{tno}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from course
+        <where>
+            <if test="cno != null and cno != ''">
+                and cno = #{cno}
+            </if>
+            <if test="cname != null and cname != ''">
+                and cname = #{cname}
+            </if>
+            <if test="tno != null and tno != ''">
+                and tno = #{tno}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="cno" useGeneratedKeys="true">
+        insert into course(cno,cname,tno)
+        values (#{cname}#{tno})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="cno" useGeneratedKeys="true">
+        insert into course(cno,cname,tno)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.cname}#{entity.tno})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="cno" useGeneratedKeys="true">
+        insert into course(cno,cname,tno)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.cname}#{entity.tno})
+        </foreach>
+        on duplicate key update
+        cname = values(cname)tno = values(tno)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update course
+        <set>
+            <if test="cname != null and cname != ''">
+                cname = #{cname},
+            </if>
+            <if test="tno != null and tno != ''">
+                tno = #{tno},
+            </if>
+        </set>
+        where cno = #{cno}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from course
+        where cno = #{cno}
+    </delete>
+</mapper>
+
