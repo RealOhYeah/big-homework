@@ -6,7 +6,7 @@
 <template>
   <div id="app">
     <Top></Top>
-
+ 
     <!--上传文件-->
     <UploadFile ref="uploadFile" @getList="pagingtoGetDataHadler"></UploadFile>
 

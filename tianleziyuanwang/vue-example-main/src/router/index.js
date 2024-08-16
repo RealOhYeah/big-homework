@@ -21,6 +21,11 @@ const mainRouters =
       name: 'userindex',
       component: resolve => (require(["@/view/modules/user/index"], resolve))
     },
+    { 
+      path: '/score',
+      name: 'score',
+      component: resolve => (require(["@/view/modules/score/index"], resolve))
+    },
     {
       path: '/blogindex',
       name: 'blogindex',
@@ -117,6 +122,8 @@ const mainRouters =
       name: "allpublicfile",
       component: resolve => (require(["@/view/modules/allpublicfile/index"], resolve))
     },
+  
+    
   ]
 
 const router = new Router({
