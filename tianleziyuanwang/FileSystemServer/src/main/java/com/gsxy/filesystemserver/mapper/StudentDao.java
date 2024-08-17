@@ -88,5 +88,11 @@ public interface StudentDao {
      * @return
      */
     ArrayList<Student> queryAllStudent();
+
+   /**
+    * 根据名字查询学生
+    *
+    */
+    Student queryByName(String s);
 }
 

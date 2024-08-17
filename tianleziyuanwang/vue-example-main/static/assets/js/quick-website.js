@@ -8,7 +8,11 @@ var Popover = (function() {
 
 	// Variables
 
+	// var $popover = $('[data-toggle="popover"]');
+
+
 	var $popover = $('[data-toggle="popover"]');
+	$popover.popover(); // 初始化 popover
 
 
 	// Methods

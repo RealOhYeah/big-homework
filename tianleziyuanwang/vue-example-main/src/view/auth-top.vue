@@ -1,7 +1,7 @@
 <!--
  * @Author: tianleiyu 
  * @Date: 2024-03-13 15:03:22
- * @LastEditTime: 2024-08-16 22:05:29
+ * @LastEditTime: 2024-08-17 15:56:04
  * @LastEditors: Oh...Yeah!!! 614988210@qq.com
  * @Description: 
  * @FilePath: /vue-example-main/src/view/auth-top.vue
@@ -32,7 +32,7 @@
 
         <a class="btn btn-block btn-dark text-truncate rounded-0 py-2 d-none d-lg-block"
             style="z-index: 1000;color:aliceblue" target="_blank">
-            <strong>哈尔滨广厦学院</strong> 图床系统 V0.2 By TLM Team
+            <strong>哈尔滨广厦学院</strong> 图床系统
         </a>
 
 
@@ -103,21 +103,21 @@
         this.loginType();
     },
     methods: {
-        // loginType(){
-        //     var type = this.$cookie.get('logintype');
-        //     console.log(type);
-        //     if (type === 'fileLogin') {
-        //         this.channel = true;
-        //         this.file = true;
-        //     }else if (type === 'carouselLogin') {
-        //         this.carousel = true;
-        //     }else{
-        //         this.channel = true;
-        //         this.file = true;
-        //         this.carousel = true
+        loginType(){
+            var type = this.$cookie.get('logintype');
+            console.log(type);
+            if (type === 'fileLogin') {
+                this.channel = true;
+                this.file = true;
+            }else if (type === 'carouselLogin') {
+                this.carousel = true;
+            }else{
+                this.channel = true;
+                this.file = true;
+                this.carousel = true
                
-        //     }
-        // },
+            }
+        },
         auth(){
             
         },

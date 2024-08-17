@@ -119,5 +119,10 @@
     <select id="queryAllStudent" resultMap="StudentMap">
         SELECT * FROM student;
     </select>
+
+    <!-- 根据名字查询学生    -->
+    <select id="queryByName" resultType="com.gsxy.filesystemserver.domain.Student">
+        SELECT * FROM student WHERE sname = #{sname} limit 1;
+    </select>
 </mapper>
 

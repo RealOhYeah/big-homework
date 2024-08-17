@@ -10,6 +10,7 @@ import com.gsxy.filesystemserver.mapper.ScoreDao;
 import com.gsxy.filesystemserver.mapper.StudentDao;
 import com.gsxy.filesystemserver.service.ScoreService;
 import com.gsxy.filesystemserver.service.StudentService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -102,44 +103,42 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public ResponseVo queryRanking() {
 
-        HashMap<String, HashMap<String, Integer>> stringHashMapHashMap = getStringHashMapHashMap();
+        HashMap<String, HashMap<String, Object>> stringHashMapHashMap = getStringHashMapHashMap();
 
-        HashMap<String, Integer> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
 
         for (String s : stringHashMapHashMap.keySet()) {
-            HashMap<String, Integer> map1 = stringHashMapHashMap.get(s);
-            int sum = 0;
-            for (Integer integer : map1.values()) {
-                sum += integer;
+            HashMap<String, Object> map1 = stringHashMapHashMap.get(s);
+            Double sum = 0.0;
+            for (Object dou :  map1.values()) {
+                sum +=  ((Integer)dou).doubleValue();
             }
             map.put(s, sum);
         }
 
-        StudentRankingVo studentRankingVo = new StudentRankingVo();
+//        StudentRankingVo studentRankingVo = new StudentRankingVo();
 
-        HashMap<String, HashMap<String, Double>> averageAndtota = new HashMap<>();
+        HashMap<String, HashMap<String, Object>> averageAndtota = new HashMap<>();
 
-        ArrayList<Student> list = studentDao.queryAllStudent();
+//        ArrayList<Student> list = studentDao.queryAllStudent();
 
         for (String s : map.keySet()) {
-            HashMap<String, Double> map2 = new HashMap<>();
-            Double d = map.get(s)+0.0;
+            HashMap<String, Object> map2 = new HashMap<>();
+            Double d =  (Double) map.get(s);
             map2.put("总分", d);
             map2.put("平均分", d/stringHashMapHashMap.get(s).size());
 
+            Student stu  = studentDao.queryByName(s);
+
+            map2.put("性别", stu.getSsex());
+            map2.put("学号", stu.getSno());
+            map2.put("班级", stu.getSclass());
 
             averageAndtota.put(s, map2);
          }
 
-//        System.out.println("???");
-//        System.out.println(averageAndtota);
 
-        studentRankingVo.setList(list);
-        studentRankingVo.setAverageAndtota(averageAndtota);
-
-        System.out.println(studentRankingVo);
-
-        return new ResponseVo("success", studentRankingVo, "200");
+        return new ResponseVo("success", averageAndtota, "200");
     }
 
 
@@ -150,7 +149,7 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public ResponseVo queryAll() {
 
-        HashMap<String, HashMap<String, Integer>> map = getStringHashMapHashMap();
+        HashMap<String, HashMap<String, Object>> map = getStringHashMapHashMap();
 
         System.out.println("???");
         System.out.println(map);
@@ -164,13 +163,13 @@ public class ScoreServiceImpl implements ScoreService {
      * 获取所有学生成绩
      * @return
      */
-    private HashMap<String, HashMap<String, Integer>> getStringHashMapHashMap() {
+    private HashMap<String, HashMap<String, Object>> getStringHashMapHashMap() {
         ArrayList<ScoreAll> scoreAlls = scoreDao.queryAll();
 
-        HashMap<String, HashMap<String,Integer>> map = new HashMap<>();
+        HashMap<String, HashMap<String,Object>> map = new HashMap<>();
 
         scoreAlls.forEach(scoreAll -> {
-            HashMap<String, Integer> map1 = new HashMap<>();
+            HashMap<String, Object> map1 = new HashMap<>();
             if(map.containsKey(scoreAll.getSname())){
                 map1 = map.get(scoreAll.getSname());
             }
