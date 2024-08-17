@@ -27,10 +27,10 @@ public class ScoreController {
 
 
     /**
-     * 查看所有学生成绩排名
+     * 查看所有学生成绩排名(总分、平均分、个人信息)
      * @return
      */
-    @PostMapping(value = "/queryRanking")
+    @PostMapping(value = "/queryRanking" ,produces = "text/plain;charset=UTF-8")
     public String queryRanking() {
         return JSONArray.toJSONString(scoreService.queryRanking());
     }
@@ -56,7 +56,7 @@ public class ScoreController {
      * 查看所有学生成绩
      * @return
      */
-    @PostMapping(value = "/queryAll")
+    @PostMapping( "/queryAll")
     public String queryAll() {
         return JSONArray.toJSONString(scoreService.queryAll());
     }
@@ -69,7 +69,7 @@ public class ScoreController {
      * @param pageRequest 分页对象
      * @return 查询结果
      */
-    @GetMapping
+    @GetMapping("queryByPage")
     public ResponseEntity<Page<Score>> queryByPage(Score score, PageRequest pageRequest) {
         return ResponseEntity.ok(this.scoreService.queryByPage(score, pageRequest));
     }
@@ -91,7 +91,7 @@ public class ScoreController {
      * @param score 实体
      * @return 新增结果
      */
-    @PostMapping
+    @PostMapping("add")
     public ResponseEntity<Score> add(Score score) {
         return ResponseEntity.ok(this.scoreService.insert(score));
     }
@@ -102,7 +102,7 @@ public class ScoreController {
      * @param score 实体
      * @return 编辑结果
      */
-    @PutMapping
+    @PutMapping("edit")
     public ResponseEntity<Score> edit(Score score) {
         return ResponseEntity.ok(this.scoreService.update(score));
     }
@@ -113,7 +113,7 @@ public class ScoreController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
+    @DeleteMapping("/deleteById/{id}")
     public ResponseEntity<Boolean> deleteById(String id) {
         return ResponseEntity.ok(this.scoreService.deleteById(id));
     }

@@ -163,6 +163,8 @@ module.exports = {
             patterns: [resolve('./src/style/theme.less')]
         }
     },
+
+    
     // devServer: {
     //     open: true, // 自动启动浏览器
     //     host: '192.168.0.109', // localhost

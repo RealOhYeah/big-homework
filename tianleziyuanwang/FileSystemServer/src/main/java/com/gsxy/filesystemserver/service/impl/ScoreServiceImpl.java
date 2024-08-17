@@ -3,9 +3,14 @@ package com.gsxy.filesystemserver.service.impl;
 import com.gsxy.filesystemserver.domain.Course;
 import com.gsxy.filesystemserver.domain.Score;
 import com.gsxy.filesystemserver.domain.ScoreAll;
+import com.gsxy.filesystemserver.domain.Student;
 import com.gsxy.filesystemserver.domain.vo.ResponseVo;
+import com.gsxy.filesystemserver.domain.vo.StudentRankingVo;
 import com.gsxy.filesystemserver.mapper.ScoreDao;
+import com.gsxy.filesystemserver.mapper.StudentDao;
 import com.gsxy.filesystemserver.service.ScoreService;
+import com.gsxy.filesystemserver.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,6 +31,9 @@ import java.util.List;
 public class ScoreServiceImpl implements ScoreService {
     @Resource
     private ScoreDao scoreDao;
+
+    @Autowired
+    private StudentDao studentDao;
 
     /**
      * 通过ID查询单条数据
@@ -88,7 +96,7 @@ public class ScoreServiceImpl implements ScoreService {
 
 
     /**
-     * 查看所有学生成绩排名(总分和平均分)
+     * 查看所有学生成绩排名(总分、平均分、个人信息)
      * @return
      */
     @Override
@@ -107,20 +115,31 @@ public class ScoreServiceImpl implements ScoreService {
             map.put(s, sum);
         }
 
+        StudentRankingVo studentRankingVo = new StudentRankingVo();
+
         HashMap<String, HashMap<String, Double>> averageAndtota = new HashMap<>();
+
+        ArrayList<Student> list = studentDao.queryAllStudent();
 
         for (String s : map.keySet()) {
             HashMap<String, Double> map2 = new HashMap<>();
             Double d = map.get(s)+0.0;
             map2.put("总分", d);
             map2.put("平均分", d/stringHashMapHashMap.get(s).size());
+
+
             averageAndtota.put(s, map2);
          }
 
-        System.out.println("???");
-        System.out.println(averageAndtota);
+//        System.out.println("???");
+//        System.out.println(averageAndtota);
 
-        return new ResponseVo("success", averageAndtota, "200");
+        studentRankingVo.setList(list);
+        studentRankingVo.setAverageAndtota(averageAndtota);
+
+        System.out.println(studentRankingVo);
+
+        return new ResponseVo("success", studentRankingVo, "200");
     }
 
 

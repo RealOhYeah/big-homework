@@ -25,9 +25,9 @@
           <tbody>
             <tr v-for="obj in scoreList">
               <th scope="row"></th>
-              <td>{{ obj.originalFileName }}</td>
+              <!-- <td>{{ obj.originalFileName }}</td>
               <td>{{ obj.fileType }}</td>
-              <td>{{ obj.createTime }}</td>
+              <td>{{ obj.createTime }}</td> -->
               <td>--</td>
               <td>
                 <el-link type="primary" @click="downFileTest(obj.downloadPath)">下载资源</el-link>
@@ -53,6 +53,8 @@
 <script>
 import Top from '../../auth-top.vue';
 import Foot from "../../main-foot.vue";
+import { queryRanking, queryAll } from '@/api/score.js'; 
+ 
 export default {
   name: 'VueExampleMainIndex',
 
@@ -71,11 +73,43 @@ export default {
 
   mounted() {
     console.log("Hello World")
+
+
+  },
+
+  created(){
+
+    // queryAll().then((res) => {
+    //   console.log("77777777777777");
+    //   console.log(res); 
+    // });
+
+    const _this = this;
+    queryRanking('').then((res) => {
+
+      console.log("6666666666666");
+      console.log(res);
+
+
+      if (res.data.code === "0x200") {
+        this.$message({
+          showClose: true,
+          message: "查询成功!",
+          type: "success",
+        });
+      }
+      _this.tableData = res.data.data.list;
+      // console.log("???");
+      // console.log(_this.tableData);
+    });
   },
 
   methods: {
-    
+
+
   },
+
+
 };
 </script>
 

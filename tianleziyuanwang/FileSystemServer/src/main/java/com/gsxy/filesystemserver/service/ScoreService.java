@@ -62,7 +62,7 @@ public interface ScoreService {
 
 
     /**
-     * 查看所有学生成绩排名
+     * 查看所有学生成绩排名(总分、平均分、个人信息)
      * @return
      */
     ResponseVo queryRanking();

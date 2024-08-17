@@ -59,4 +59,5 @@ public interface StudentService {
      * @return
      */
     ResponseVo queryAllStudent();
+
 }
