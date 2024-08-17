@@ -1,6 +1,7 @@
 package com.gsxy.filesystemserver.service;
 
 import com.gsxy.filesystemserver.domain.Score;
+import com.gsxy.filesystemserver.domain.bo.ScoreInputBo;
 import com.gsxy.filesystemserver.domain.vo.ResponseVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -66,4 +67,11 @@ public interface ScoreService {
      * @return
      */
     ResponseVo queryRanking();
+
+    /**
+     * 学生成绩录入
+     * @param scoreInputBo
+     * @return
+     */
+    Void scoreInput(ScoreInputBo scoreInputBo);
 }

@@ -11,6 +11,28 @@
 
         <el-button type="primary" @click="scoreInput()">录入学生成绩</el-button>
 
+               <!--  待完成  -->
+                <!-- <el-dialog title="信息" :visible.sync="isAdd">
+                    <el-form :model="form">
+                        <el-form-item v-for="field in formFieldsWithTypes" :key="field.name" :label="field.label">
+                            <template v-if="field.type === 'string'">
+                                <el-input v-model="form[field.name]"></el-input>
+                            </template>
+                            <template v-else-if="field.type === 'number'">
+                                <el-input-number v-model.number="form[field.name]"></el-input-number>
+                            </template>
+                            <template v-else-if="field.type === 'date'">
+                                <el-date-picker v-model="form[field.name]" type="date"
+                                    value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期"></el-date-picker>
+                            </template          
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="isAdd = false">取 消</el-button>
+                        <el-button type="primary" @click="addChannels">确 定</el-button>
+                    </div>
+                </el-dialog> -->
+
         <table class="table">
           <thead class="thead-light">
             <tr>
@@ -34,9 +56,6 @@
               <td>{{ obj.sClass }}</td>
               <td>{{ obj.totalScore }}</td>
               <td>{{ obj.averageScore }}</td>
-
-
-
             </tr>
           </tbody>
         </table>
@@ -49,7 +68,7 @@
 <script>
 import Top from '../../auth-top.vue';
 import Foot from "../../main-foot.vue";
-import { queryRanking, queryAll } from '@/api/score.js'; 
+import { queryRanking } from '@/api/score.js'; 
  
 export default {
   name: 'VueExampleMainIndex',
@@ -76,25 +95,15 @@ export default {
   
     const _this = this;
     queryRanking('').then((res) => {
-
-      console.log("9999999999999999999")  
-      console.log(res);  
-
-      console.log("6666666666666666666666666")
-
+ 
+      console.log(res);   
       const aver = res.data.data
-      
-
-      console.log("777777777777777777")
+       
       console.log(aver);
 
       if (res.data.code == "0x200") {
 
-        _this.scoreList = res.data.data;
-
-        console.log("1111111111111111111111111111111111111")
-
-
+        _this.scoreList = res.data.data; 
         this.$message({
           showClose: true,
           message: "查询成功!",
@@ -107,6 +116,9 @@ export default {
 
   methods: {
 
+    scoreInput(){
+
+    } 
 
   },
 

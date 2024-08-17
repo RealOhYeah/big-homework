@@ -4,6 +4,7 @@ import com.gsxy.filesystemserver.domain.Course;
 import com.gsxy.filesystemserver.domain.Score;
 import com.gsxy.filesystemserver.domain.ScoreAll;
 import com.gsxy.filesystemserver.domain.Student;
+import com.gsxy.filesystemserver.domain.bo.ScoreInputBo;
 import com.gsxy.filesystemserver.domain.vo.ResponseVo;
 import com.gsxy.filesystemserver.domain.vo.StudentRankingVo;
 import com.gsxy.filesystemserver.mapper.ScoreDao;
@@ -135,6 +136,18 @@ public class ScoreServiceImpl implements ScoreService {
 
 
         return new ResponseVo("success", list, "0x200");
+    }
+
+    /**
+     * 学生成绩录入
+     * @param scoreInputBo
+     * @return
+     */
+    @Override
+    public Void scoreInput(ScoreInputBo scoreInputBo) {
+
+
+        return null;
     }
 
 

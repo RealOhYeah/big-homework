@@ -2,6 +2,7 @@ package com.gsxy.filesystemserver.controller;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.gsxy.filesystemserver.domain.Score;
+import com.gsxy.filesystemserver.domain.bo.ScoreInputBo;
 import com.gsxy.filesystemserver.domain.vo.ResponseVo;
 import com.gsxy.filesystemserver.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,15 +40,15 @@ public class ScoreController {
 
     /**
      * 学生成绩录入
-     * @param score
+     * @param scoreInputBo
      * @return
      */
     @PostMapping("scoreInput")
-    public String scoreInput(Score score) {
+    public String scoreInput(ScoreInputBo scoreInputBo) {
 
-        Score insert = scoreService.insert(score);
+        scoreService.scoreInput(scoreInputBo);
 
-        return JSONArray.toJSONString(new ResponseVo("success", insert, "200"));
+        return JSONArray.toJSONString(new ResponseVo("success", null, "0x200"));
     }
 
 
