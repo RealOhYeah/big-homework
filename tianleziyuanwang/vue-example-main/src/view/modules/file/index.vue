@@ -219,6 +219,9 @@ export default {
       pagingtoGetData(params).then(res => {
         // console.log(res, "Qweqweqeq");
         this.fileFile = res.data.data.list;
+        console.log("************");
+        console.log(res.data.data.list)
+
         this.total = res.data.data.count;
       });
     },

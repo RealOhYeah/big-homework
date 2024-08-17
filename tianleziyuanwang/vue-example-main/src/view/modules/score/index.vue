@@ -25,15 +25,19 @@
           <tbody>
             <tr v-for="obj in scoreList">
               <th scope="row"></th>
-              <!-- <td>{{ obj.originalFileName }}</td>
-              <td>{{ obj.fileType }}</td>
-              <td>{{ obj.createTime }}</td> -->
+              <td>{{ obj.totalScore }}</td>
+              <td>{{ obj.averageScore }}</td>
+              <td>{{ obj.sname }}</td>
+              <td>{{ obj.ssex }}</td>
+              <td>{{ obj.sId }}</td>
+              <td>{{ obj.sname }}</td>
+
               <td>--</td>
               <td>
-                <el-link type="primary" @click="downFileTest(obj.downloadPath)">下载资源</el-link> 
+                <el-link type="primary" @click="downFileTest(obj.downloadPath)">下载资源</el-link>
                 <el-link type="primary" @click="selectorChannel(obj.id)">发送到通道</el-link>
-                <el-link type="success" v-if="hide">修改内容</el-link>  
-                <el-link type="warning" v-if="hide">修改权限</el-link> 
+                <el-link type="success" v-if="hide">修改内容</el-link>
+                <el-link type="warning" v-if="hide">修改权限</el-link>
                 <el-popconfirm title="这是一段内容确定删除吗？" @confirm="deleteHandeler(obj.id)">
                   <el-link type="danger" slot="reference">删除</el-link>
                   <!-- <el-button type="text" size="small" >删除</el-button> -->
@@ -71,44 +75,40 @@ export default {
   },
 
   mounted() {
-    console.log("Hello World")
-
+    console.log("Hello World") 
 
   },
 
   created(){
-
-    // queryAll().then((res) => {
-    //   console.log("77777777777777");
-    //   console.log(res); 
-    // });
-
+  
     const _this = this;
     queryRanking('').then((res) => {
 
-      console.log(res);
-      console.log("6666666666666");
-      console.log(res.data.data);
-      console.log("1111111111111111");
+      console.log("9999999999999999999")  
+      console.log(res);  
 
-      const average = res.data.data.averageAndtota;
-      const stuInfo = res.data.data.list;
+      console.log("6666666666666666666666666")
 
-      console.log("2222222222222222");
-      console.log(stuInfo);
-      console.log("3333333333333333");
-      console.log(average); 
+      const aver = res.data.data
+      
 
-      if (res.data.code === "0x200") {
+      console.log("777777777777777777")
+      console.log(aver);
+
+      if (res.data.code == "0x200") {
+
+        _this.scoreList = res.data.data;
+
+        console.log("1111111111111111111111111111111111111")
+
+
         this.$message({
           showClose: true,
           message: "查询成功!",
           type: "success",
         });
       }
-      _this.tableData = res.data.data.list;
-      // console.log("???");
-      // console.log(_this.tableData);
+      
     });
   },
 

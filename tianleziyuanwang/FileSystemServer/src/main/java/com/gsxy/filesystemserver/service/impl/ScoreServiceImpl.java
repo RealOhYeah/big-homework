@@ -18,9 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * (Score)表服务实现类
@@ -104,8 +102,7 @@ public class ScoreServiceImpl implements ScoreService {
     public ResponseVo queryRanking() {
 
         HashMap<String, HashMap<String, Object>> stringHashMapHashMap = getStringHashMapHashMap();
-
-        HashMap<String, Object> map = new HashMap<>();
+        ArrayList<StudentRankingVo> list = new ArrayList<>();
 
         for (String s : stringHashMapHashMap.keySet()) {
             HashMap<String, Object> map1 = stringHashMapHashMap.get(s);
@@ -113,32 +110,31 @@ public class ScoreServiceImpl implements ScoreService {
             for (Object dou :  map1.values()) {
                 sum +=  ((Integer)dou).doubleValue();
             }
-            map.put(s, sum);
-        }
-
-//        StudentRankingVo studentRankingVo = new StudentRankingVo();
-
-        HashMap<String, HashMap<String, Object>> averageAndtota = new HashMap<>();
-
-//        ArrayList<Student> list = studentDao.queryAllStudent();
-
-        for (String s : map.keySet()) {
-            HashMap<String, Object> map2 = new HashMap<>();
-            Double d =  (Double) map.get(s);
-            map2.put("总分", d);
-            map2.put("平均分", d/stringHashMapHashMap.get(s).size());
 
             Student stu  = studentDao.queryByName(s);
+            StudentRankingVo studentRankingVo = new StudentRankingVo(
+                    sum.toString(),
+                    sum/stringHashMapHashMap.get(s).size() + "",
+                    stu.getSname(),
+                    stu.getSsex(),
+                    stu.getSno(),
+                    stu.getSclass()
+            );
 
-            map2.put("性别", stu.getSsex());
-            map2.put("学号", stu.getSno());
-            map2.put("班级", stu.getSclass());
+            list.add(studentRankingVo);
 
-            averageAndtota.put(s, map2);
-         }
+        }
+
+        // 排行榜排名
+        Collections.sort(list, new Comparator<StudentRankingVo>() {
+            @Override
+            public int compare(StudentRankingVo o1, StudentRankingVo o2) {
+                return Double.compare(Double.parseDouble(o2.getTotalScore()), Double.parseDouble(o1.getTotalScore()));
+            }
+        });
 
 
-        return new ResponseVo("success", averageAndtota, "200");
+        return new ResponseVo("success", list, "0x200");
     }
 
 

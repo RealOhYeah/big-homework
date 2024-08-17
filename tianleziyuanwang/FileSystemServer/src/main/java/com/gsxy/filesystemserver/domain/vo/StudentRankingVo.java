@@ -8,40 +8,82 @@ import java.util.HashMap;
 
 public class StudentRankingVo implements Serializable {
 
-
-    private HashMap<String, HashMap<String, Double>> averageAndtota;
-
-    ArrayList<Student> list;
+    private String totalScore;
+    private String averageScore;
+    private String sName;
+    private String sSex;
+    private String sId;
+    private String sClass;
 
     public StudentRankingVo() {
     }
 
-    public StudentRankingVo(HashMap<String, HashMap<String, Double>> averageAndtota, ArrayList<Student> list) {
-        this.averageAndtota = averageAndtota;
-        this.list = list;
+    public StudentRankingVo(String totalScore, String averageScore, String sName, String sSex, String sId, String sClass) {
+        this.totalScore = totalScore;
+        this.averageScore = averageScore;
+        this.sName = sName;
+        this.sSex = sSex;
+        this.sId = sId;
+        this.sClass = sClass;
     }
 
-    public HashMap<String, HashMap<String, Double>> getAverageAndtota() {
-        return averageAndtota;
+    public String getTotalScore() {
+        return totalScore;
     }
 
-    public void setAverageAndtota(HashMap<String, HashMap<String, Double>> averageAndtota) {
-        this.averageAndtota = averageAndtota;
+    public void setTotalScore(String totalScore) {
+        this.totalScore = totalScore;
     }
 
-    public ArrayList<Student> getList() {
-        return list;
+    public String getAverageScore() {
+        return averageScore;
     }
 
-    public void setList(ArrayList<Student> list) {
-        this.list = list;
+    public void setAverageScore(String averageScore) {
+        this.averageScore = averageScore;
+    }
+
+    public String getsName() {
+        return sName;
+    }
+
+    public void setsName(String sName) {
+        this.sName = sName;
+    }
+
+    public String getsSex() {
+        return sSex;
+    }
+
+    public void setsSex(String sSex) {
+        this.sSex = sSex;
+    }
+
+    public String getsId() {
+        return sId;
+    }
+
+    public void setsId(String sId) {
+        this.sId = sId;
+    }
+
+    public String getsClass() {
+        return sClass;
+    }
+
+    public void setsClass(String sClass) {
+        this.sClass = sClass;
     }
 
     @Override
     public String toString() {
         return "StudentRankingVo{" +
-                "averageAndtota=" + averageAndtota +
-                ", list=" + list +
+                "totalScore='" + totalScore + '\'' +
+                ", averageScore='" + averageScore + '\'' +
+                ", sName='" + sName + '\'' +
+                ", sSex='" + sSex + '\'' +
+                ", sId='" + sId + '\'' +
+                ", sClass='" + sClass + '\'' +
                 '}';
     }
 }
