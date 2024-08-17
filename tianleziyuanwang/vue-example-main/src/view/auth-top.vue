@@ -53,7 +53,7 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav mt-4 mt-lg-0 ml-auto">
                             <li class="nav-item " v-if="true">
-                                <a @click.prevent="goScore" class="nav-link" href="">学生成绩管理</a>
+                                <a @click.prevent="goScore" class="nav-link" href="">成绩排行榜</a>
                             </li>
                             <li class="nav-item " v-if="true">
                                 <a @click.prevent="goChannel" class="nav-link" href="">通道管理</a>
