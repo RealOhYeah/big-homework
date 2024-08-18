@@ -158,8 +158,7 @@ export default {
   },
 
   methods: {
-
-
+ 
     scoreIn(formName){
  
           this.$refs[formName].validate((valid) => {
@@ -174,11 +173,16 @@ export default {
                   message: "录入成功!",
                   type: "success",
                 }); 
+
+              
               }
             })
            
         }
       });
+      this.$refs[formName].resetFields();
+
+
       },
       
       resetForm(formName) { 
@@ -190,6 +194,7 @@ export default {
           type: "fail",
         });
         this.dialogFormVisible = false
+ 
       },
       
   },

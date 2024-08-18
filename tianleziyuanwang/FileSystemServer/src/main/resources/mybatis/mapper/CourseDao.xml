@@ -80,6 +80,12 @@
         cname = values(cname)tno = values(tno)
     </insert>
 
+
+    <insert id="scoreInput">
+        insert into course (cno) value(#{cno})
+
+    </insert>
+
     <!--通过主键修改数据-->
     <update id="update">
         update course

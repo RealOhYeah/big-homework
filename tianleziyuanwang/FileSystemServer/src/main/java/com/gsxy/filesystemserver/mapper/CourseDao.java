@@ -1,6 +1,7 @@
 package com.gsxy.filesystemserver.mapper;
 
 import com.gsxy.filesystemserver.domain.Course;
+import com.gsxy.filesystemserver.domain.bo.ScoreInputBo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
@@ -91,5 +92,10 @@ public interface CourseDao {
      */
     int deleteById(String cno);
 
+    /**
+     * 新增课程编号
+     * @param scoreInputBo
+     */
+    void scoreInput(ScoreInputBo scoreInputBo);
 }
 

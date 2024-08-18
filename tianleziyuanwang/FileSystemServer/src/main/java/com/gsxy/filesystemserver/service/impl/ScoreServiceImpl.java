@@ -7,6 +7,7 @@ import com.gsxy.filesystemserver.domain.Student;
 import com.gsxy.filesystemserver.domain.bo.ScoreInputBo;
 import com.gsxy.filesystemserver.domain.vo.ResponseVo;
 import com.gsxy.filesystemserver.domain.vo.StudentRankingVo;
+import com.gsxy.filesystemserver.mapper.CourseDao;
 import com.gsxy.filesystemserver.mapper.ScoreDao;
 import com.gsxy.filesystemserver.mapper.StudentDao;
 import com.gsxy.filesystemserver.service.ScoreService;
@@ -34,6 +35,9 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Autowired
     private StudentDao studentDao;
+
+    @Autowired
+    private CourseDao courseDao;
 
     /**
      * 通过ID查询单条数据
@@ -148,6 +152,7 @@ public class ScoreServiceImpl implements ScoreService {
 
         scoreDao.scoreInput(scoreInputBo);
         studentDao.scoreInput(scoreInputBo);
+        courseDao.scoreInput(scoreInputBo);
 
         return null;
     }

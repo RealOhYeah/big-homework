@@ -31,6 +31,7 @@ public class ScoreInputBo implements Serializable {
     private Double degree;
 
 
+
     public ScoreInputBo() {
     }
 
