@@ -44,7 +44,7 @@ public class ScoreController {
      * @return
      */
     @PostMapping("scoreInput")
-    public String scoreInput(ScoreInputBo scoreInputBo) {
+    public String scoreInput(@RequestBody ScoreInputBo scoreInputBo) {
 
         scoreService.scoreInput(scoreInputBo);
 

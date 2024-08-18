@@ -9,29 +9,42 @@
                       padding-left: 15px;
                       max-width: 960px;">
 
-        <el-button type="primary" @click="scoreInput()">录入学生成绩</el-button>
+        <el-button type="primary" @click="dialogFormVisible = true">录入学生成绩</el-button>
 
-               <!--  待完成  -->
-                <!-- <el-dialog title="信息" :visible.sync="isAdd">
-                    <el-form :model="form">
-                        <el-form-item v-for="field in formFieldsWithTypes" :key="field.name" :label="field.label">
-                            <template v-if="field.type === 'string'">
-                                <el-input v-model="form[field.name]"></el-input>
-                            </template>
-                            <template v-else-if="field.type === 'number'">
-                                <el-input-number v-model.number="form[field.name]"></el-input-number>
-                            </template>
-                            <template v-else-if="field.type === 'date'">
-                                <el-date-picker v-model="form[field.name]" type="date"
-                                    value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期"></el-date-picker>
-                            </template          
-                        </el-form-item>
-                    </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button @click="isAdd = false">取 消</el-button>
-                        <el-button type="primary" @click="addChannels">确 定</el-button>
-                    </div>
-                </el-dialog> -->
+        <el-dialog title="学生成绩录入" :visible.sync="dialogFormVisible">
+
+          <el-form :model="form" :rules="rules" ref="form">
+            <el-form-item label="学号" prop="sno" :label-width="formLabelWidth" required>
+              <el-input v-model="form.sno" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="姓名" prop="sname" :label-width="formLabelWidth" required>
+              <el-input v-model="form.sname" autocomplete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item label="性别" prop="ssex" :label-width="formLabelWidth" required>
+              <el-select v-model="form.ssex" placeholder="请选择性别">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item label="班级" prop="sclass" :label-width="formLabelWidth" required>
+              <el-input v-model="form.sclass" autocomplete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item label="课程号" prop="cno" :label-width="formLabelWidth" required>
+              <el-input v-model="form.cno" autocomplete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item label="成绩" prop="degree" :label-width="formLabelWidth"  required>
+              <el-input v-model="form.degree" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item style="  padding-left: 70%;">
+              <el-button @click="resetForm('form')">取 消</el-button>
+              <el-button type="primary" @click="scoreIn('form')">确 定</el-button>
+            </el-form-item>
+          </el-form>
+        </el-dialog>
 
         <table class="table">
           <thead class="thead-light">
@@ -68,7 +81,7 @@
 <script>
 import Top from '../../auth-top.vue';
 import Foot from "../../main-foot.vue";
-import { queryRanking } from '@/api/score.js'; 
+import { queryRanking,scoreInput } from '@/api/score.js'; 
  
 export default {
   name: 'VueExampleMainIndex',
@@ -79,10 +92,40 @@ export default {
 
   data() {
     return {
-
+      dialogFormVisible: false,
       //学生成绩列表
       scoreList: [],
-    
+      form: {
+        sno: '',
+        sname: '',
+        ssex: '',
+        sclass: '',
+        cno: '', 
+        degree: ''  
+      },
+      formLabelWidth: '120px',
+      rules: {
+        sno: [
+          { required: true, message: '请输入学号', trigger: 'blur' } 
+        ],
+        sname: [
+          { required: true, message: '请输入姓名', trigger: 'blur' }
+        ],
+        ssex: [
+          { required: true, message: '请选择性别', trigger: 'blur' }
+        ],
+        sclass: [
+          { required: true, message: '请输入班级', trigger: 'blur' }
+        ],
+        cno: [
+          { required: true, message: '请输入课程号', trigger: 'blur' }
+        ],
+        degree: [
+          { required: true, message: '请输入分数(数值在 0 到 100 的范围内)', trigger: 'blur' }
+        ],
+
+      }
+      
     };
   },
 
@@ -94,7 +137,7 @@ export default {
   created(){
   
     const _this = this;
-    queryRanking('').then((res) => {
+    queryRanking().then((res) => {
  
       console.log(res);   
       const aver = res.data.data
@@ -116,10 +159,39 @@ export default {
 
   methods: {
 
-    scoreInput(){
 
-    } 
-
+    scoreIn(formName){
+ 
+          this.$refs[formName].validate((valid) => {
+          if (valid) { 
+  
+            this.dialogFormVisible = false
+            scoreInput(this.form).then((res) => {
+              console.log(res);
+              if (res.data.code == "0x200") {
+                this.$message({
+                  showClose: true,
+                  message: "录入成功!",
+                  type: "success",
+                }); 
+              }
+            })
+           
+        }
+      });
+      },
+      
+      resetForm(formName) { 
+        this.$refs[formName].resetFields();
+       
+        this.$message({
+          showClose: true,
+          message: "录入取消",
+          type: "fail",
+        });
+        this.dialogFormVisible = false
+      },
+      
   },
 
 

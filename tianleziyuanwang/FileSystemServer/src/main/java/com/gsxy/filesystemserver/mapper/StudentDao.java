@@ -1,6 +1,7 @@
 package com.gsxy.filesystemserver.mapper;
 
 import com.gsxy.filesystemserver.domain.Student;
+import com.gsxy.filesystemserver.domain.bo.ScoreInputBo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
@@ -94,5 +95,11 @@ public interface StudentDao {
     *
     */
     Student queryByName(String s);
+
+    /**
+     * 新增学生
+     * @param scoreInputBo
+     */
+    void scoreInput(ScoreInputBo scoreInputBo);
 }
 

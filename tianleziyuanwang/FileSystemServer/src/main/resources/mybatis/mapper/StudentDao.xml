@@ -9,6 +9,10 @@
         <result property="sclass" column="sclass" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <insert id="scoreInput">
+        insert into student (sno, sname, ssex, sclass) values (#{sno}, #{sname}, #{ssex}, #{sclass})
+    </insert>
+
     <!--查询单个-->
     <select id="queryById" resultMap="StudentMap">
         select sno,sname,ssex,sbirthday,sclass
@@ -87,6 +91,8 @@
         on duplicate key update
         sname = values(sname)ssex = values(ssex)sbirthday = values(sbirthday)sclass = values(sclass)
     </insert>
+
+
 
     <!--通过主键修改数据-->
     <update id="update">

@@ -4,6 +4,7 @@ package com.gsxy.filesystemserver.mapper;
 import com.gsxy.filesystemserver.domain.Course;
 import com.gsxy.filesystemserver.domain.Score;
 import com.gsxy.filesystemserver.domain.ScoreAll;
+import com.gsxy.filesystemserver.domain.bo.ScoreInputBo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
@@ -93,5 +94,10 @@ public interface ScoreDao {
      */
     ArrayList<ScoreAll> queryAll();
 
+    /**
+     * 输入学生成绩
+     * @param scoreInputBo
+     */
+    void scoreInput(ScoreInputBo scoreInputBo);
 }
 

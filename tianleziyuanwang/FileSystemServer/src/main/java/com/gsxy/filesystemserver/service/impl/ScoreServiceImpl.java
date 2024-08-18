@@ -146,6 +146,8 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public Void scoreInput(ScoreInputBo scoreInputBo) {
 
+        scoreDao.scoreInput(scoreInputBo);
+        studentDao.scoreInput(scoreInputBo);
 
         return null;
     }

@@ -8,6 +8,12 @@
 <!--        <result column="degree" property="degree" />-->
 <!--    </resultMap>-->
 
+    <!-- 添加学生成绩 -->
+    <insert id="scoreInput">
+            insert into score(sno,cno,degree) values  (#{sno},#{cno},#{degree})
+    </insert>
+
+
     <!-- 查询所有学生的成绩    -->
     <select id="queryAll" resultType="com.gsxy.filesystemserver.domain.ScoreAll">
         SELECT
@@ -94,6 +100,7 @@
         on duplicate key update
         degree = values(degree)
     </insert>
+
 
     <!--通过主键修改数据-->
     <update id="update">
