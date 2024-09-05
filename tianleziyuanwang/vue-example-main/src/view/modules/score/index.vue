@@ -13,7 +13,7 @@
 
         <el-dialog title="学生成绩录入" :visible.sync="dialogFormVisible">
 
-          <el-form :model="form" :rules="rules" ref="form">
+          <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
             <el-form-item label="学号" prop="sno" :label-width="formLabelWidth" required>
               <el-input v-model="form.sno" autocomplete="off"></el-input>
             </el-form-item>
@@ -36,8 +36,8 @@
               <el-input v-model="form.cno" autocomplete="off"></el-input>
             </el-form-item>
 
-            <el-form-item label="成绩" prop="degree" :label-width="formLabelWidth"  required>
-              <el-input v-model="form.degree" autocomplete="off"></el-input>
+            <el-form-item label="成绩" prop="degree" :label-width="formLabelWidth" required>
+              <el-input v-model.number="form.degree" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item style="  padding-left: 70%;">
               <el-button @click="resetForm('form')">取 消</el-button>
@@ -82,6 +82,7 @@
 import Top from '../../auth-top.vue';
 import Foot from "../../main-foot.vue";
 import { queryRanking,scoreInput } from '@/api/score.js'; 
+
  
 export default {
   name: 'VueExampleMainIndex',
@@ -91,6 +92,89 @@ export default {
     },
 
   data() {
+ 
+    var validatePass1 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入学号'));
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('sno');
+        }
+        callback();
+      }
+    };
+
+    var validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入姓名'));
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('sname');
+        }
+        callback();
+      }
+    };
+    var validatePass3 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请选择性别'));
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('ssex');
+        }
+        callback();
+      }
+    };
+    var validatePass4 = (rule, value, callback) => {
+     
+      if (value === '') {
+        callback(new Error('请输入班级'));
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('sclass');
+        }
+        callback();
+      }
+    };
+    var validatePass5 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入课程号'));
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('cno');
+        }
+        callback();
+      }
+    };
+    var validatePass6 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入成绩'));
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('degree');
+        }
+        callback();
+      }
+    };
+    var validatePass6 = (rule, value, callback) => {
+      console.log("?????")
+      console.log(value);
+       
+      if (!value) {
+        return callback(new Error('请输入成绩'));
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error('请输入数字值'));
+        } else {
+          if (value >= 0 && value <= 100) {
+            callback();
+          } else {
+            callback(new Error('成绩必须在0到100之间'));
+          } 
+        }
+      }, 100);
+    };
+  
     return {
       dialogFormVisible: false,
       //学生成绩列表
@@ -106,27 +190,30 @@ export default {
       formLabelWidth: '120px',
       rules: {
         sno: [
-          { required: true, message: '请输入学号', trigger: 'blur' } 
+          {validator: validatePass1, trigger: 'blur' } 
         ],
         sname: [
-          { required: true, message: '请输入姓名', trigger: 'blur' }
-        ],
+          {validator: validatePass2, trigger: 'blur' }
+        ], 
         ssex: [
-          { required: true, message: '请选择性别', trigger: 'blur' }
+          { validator: validatePass3,   trigger: 'blur' }
         ],
         sclass: [
-          { required: true, message: '请输入班级', trigger: 'blur' }
+          { validator: validatePass4, trigger: 'blur' }
         ],
         cno: [
-          { required: true, message: '请输入课程号', trigger: 'blur' }
+          { validator: validatePass5,   trigger: 'blur' }
         ],
         degree: [
-          { required: true, message: '请输入分数(数值在 0 到 100 的范围内)', trigger: 'blur' }
+          { validator: validatePass6, trigger: 'blur' }
         ],
 
       }
       
     };
+
+
+    
   },
 
   mounted() {
@@ -163,7 +250,7 @@ export default {
  
           this.$refs[formName].validate((valid) => {
           if (valid) { 
-  
+
             this.dialogFormVisible = false
             scoreInput(this.form).then((res) => {
               console.log(res);
@@ -176,12 +263,18 @@ export default {
 
               
               }
+              this.$refs[formName].resetFields();
+
             })
            
+        }else {
+          console.log('error submit!!');
+          return false;
+            this.$refs[formName].resetFields();
+
         }
       });
-      this.$refs[formName].resetFields();
-
+   
 
       },
       
